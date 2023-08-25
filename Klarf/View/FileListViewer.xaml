@@ -29,7 +29,7 @@
             <Button Content="Refresh" Grid.Row="1" Grid.Column="2" Width="100"/>
             <ProgressBar Value="50" Maximum="100"  VerticalAlignment="Center" Width="200" Grid.Row="1" Grid.Column="3"/>
             <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Grid.Row="2" Grid.Column="0" Text="{Binding SelectedFolderPath}" />
-            <ListView ItemsSource="{Binding KlarfPaths}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" SelectedItem="">
+            <ListView ItemsSource="{Binding KlarfPaths}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedFile}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />

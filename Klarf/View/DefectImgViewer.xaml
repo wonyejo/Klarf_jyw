@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <mv:DefectImgViewerVM></mv:DefectImgViewerVM></UserControl.DataContext>
     <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding DefectImg}" x:Name="tifImg">
-        <Image x:Name="DefectImg" Stretch="Uniform"/>
+        <Image x:Name="DefectImg" Stretch="Uniform" Source="{Binding CurDefectImg}"/>
     </Grid>
     
 </UserControl>

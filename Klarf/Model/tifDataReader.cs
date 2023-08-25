@@ -3,17 +3,18 @@ using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using System.Collections.Generic;
 
 namespace Klarf.Model
 {
     class tifDataReader
     {
-        public ObservableCollection<BitmapImage> TifImgs { get; private set; }
+        public List<BitmapImage> TifImgs { get; private set; }
 
         public tifDataReader(string tifFilePath)
         {
-            // TIF 이미지들을 저장하기 위한 ObservableCollection
-            TifImgs = new ObservableCollection<BitmapImage>();
+            // TIF 이미지들을 저장하기 위한 List
+            TifImgs = new List<BitmapImage>();
             // 지정된 파일에서 TIF 이미지들을 불러옴
             LoadTifImages(tifFilePath);
         }

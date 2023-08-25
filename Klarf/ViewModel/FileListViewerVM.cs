@@ -7,35 +7,38 @@ using System.IO;
 using System.ComponentModel;
 using System.Linq;
 using Klarf.Model;
+using Prism.Events;
 
 namespace Klarf.ViewModel
 {
-    class FileListViewerVM : INotifyPropertyChanged
+    class FileListViewerVM : ViewModelBase
     {
 
         #region 필드
         private ObservableCollection<KlarfFile> klarfPaths;
-        private string selectedFile;
+        private KlarfFile selectedFile;
         private string selectedFolderPath;
         private RelayCommand _openFolderCommand;
-       
+        private IEventAggregator _eventAggregator;
+
+
         #endregion
 
         #region 속성
-        public string SelectedFile
+
+
+
+        public KlarfFile SelectedFile
         {
-            get
-            {
-                return selectedFile;
-            }
+            get { return selectedFile; }
             set
             {
                 if (selectedFile != value)
                 {
                     selectedFile = value;
-                    OnPropertyChanged("SelectedFile");
+                    OnPropertyChanged(nameof(selectedFile));
 
-                   
+                    _eventAggregator.GetEvent<FileSelectedEvent>().Publish(selectedFile.Path);
                 }
             }
         }
@@ -78,18 +81,26 @@ namespace Klarf.ViewModel
         }
         #endregion
         #region 생성자
-      
 
+
+
+        public FileListViewerVM(IEventAggregator eventAggregator)
+        {
+            
+            _eventAggregator = eventAggregator;
+             klarfPaths = new ObservableCollection<KlarfFile>();
+            OpenFolderCommand = new RelayCommand(OpenFolderDialog);
+        }
         public FileListViewerVM()
         {
+            
             klarfPaths = new ObservableCollection<KlarfFile>();
-           
-
             OpenFolderCommand = new RelayCommand(OpenFolderDialog);
         }
         #endregion
 
         #region 메서드
+        
         private void OpenFolderDialog()
         {
             using (var folderDialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -123,13 +134,6 @@ namespace Klarf.ViewModel
 
 
 
-        // ... (INotifyPropertyChanged 및 RelayCommand 관련 코드 생략)
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
     }
     #endregion

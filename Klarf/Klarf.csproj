@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -73,9 +76,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Defect.cs" />
+    <Compile Include="Events\FileSelectedEvent.cs" />
+    <Compile Include="FileSelectedEvent.cs" />
     <Compile Include="KlarfFile.cs" />
     <Compile Include="Die.cs" />
     <Compile Include="Model\tifDataReader.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WaferMapViewerVM.cs" />
     <Compile Include="View\DefectImgViewer.xaml.cs">
       <DependentUpon>DefectImgViewer.xaml</DependentUpon>
@@ -126,6 +132,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
