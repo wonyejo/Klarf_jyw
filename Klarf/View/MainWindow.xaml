@@ -1,0 +1,37 @@
+﻿<Window x:Class="Klarf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Klarf"
+        xmlns:vm="clr-namespace:Klarf.ViewModel"
+        xmlns:v="clr-namespace:Klarf.View"
+        mc:Ignorable="d"
+        Title="Klarf Format" Height="800" Width="1200">
+    
+     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- 첫 번째 UserControl -->
+        <v:WaferMapViewer />
+
+        <!-- 두 번째 UserControl -->
+        <v:DefectImgViewer Grid.Row="0" Grid.Column="1" />
+
+        <!-- 세 번째 UserControl -->
+        <v:FileListViewer Grid.Row="1" />
+
+        <!-- 네 번째 UserControl -->
+        <v:DefectInfoViewer Grid.Row="1" Grid.Column="1" />
+    </Grid>
+
+   
+</Window>

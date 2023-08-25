@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Klarf.View.FileListViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Klarf.View"
+             xmlns:vm="clr-namespace:Klarf.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <vm:FileListViewerVM></vm:FileListViewerVM>
+    </UserControl.DataContext>
+    <Grid Grid.Row="1" Grid.Column="0"  x:Name="fileList" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="FileViewer" Grid.Row="0" />
+            <Button Content="Open Done Folder" Grid.Row="1" Grid.Column="0" Width="150" Command="{Binding OpenFolderCommand}"/>
+            <Button Content="Save all images" Grid.Row="1" Grid.Column="1" Width="100"/>
+            <Button Content="Refresh" Grid.Row="1" Grid.Column="2" Width="100"/>
+            <ProgressBar Value="50" Maximum="100"  VerticalAlignment="Center" Width="200" Grid.Row="1" Grid.Column="3"/>
+            <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Grid.Row="2" Grid.Column="0" Text="{Binding SelectedFolderPath}" />
+            <ListView ItemsSource="{Binding KlarfPaths}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" SelectedItem="">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding UpdateTime}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>
