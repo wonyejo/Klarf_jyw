@@ -1,24 +1,63 @@
-﻿using Prism.Events;
-using Klarf.Events;
-using Klarf.Model;
+﻿using Klarf.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
-
-using System.Collections.Generic;
+using GalaSoft.MvvmLight.Messaging;
+using System.IO;
 
 namespace Klarf.ViewModel
 {
     class DefectImgViewerVM : ViewModelBase
     {
-        private int CurDefectID;
-        private BitmapImage curDefectImg;
-        private IEventAggregator _eventAggregator;
+        private int curDefectID;
+        private BitmapSource curDefectImg;
+        private TiffBitmapDecoder tiffDecoder;
+        private string receivedFolderPath;
+        private bool receivedDefectShow = false;
 
-        
+        public bool ReceivedDefectShow
+        {
+            get { return receivedDefectShow; }
+            set
+            {
+                if (receivedDefectShow != value)
+                {
+                    receivedDefectShow = value;
+                    OnPropertyChanged(nameof(receivedDefectShow));
+                    LoadImage();
+                }
+            }
+        }
 
-        public BitmapImage CurDefectImg
+        public int CurDefectID
+        {
+            get { return curDefectID; }
+            set
+            {
+                if (curDefectID != value)
+                {
+                    curDefectID = value;
+                    OnPropertyChanged(nameof(curDefectID));
+                    LoadImage();
+                }
+            }
+        }
+        public string ReceivedFolderPath
+        {
+            get { return receivedFolderPath; }
+            set
+            {
+                if (receivedFolderPath != value)
+                {
+                    receivedFolderPath = value;
+                    OnPropertyChanged(nameof(ReceivedFolderPath));
+                    LoadImage();
+                }
+            }
+        }
+
+        public BitmapSource CurDefectImg
         {
             get { return curDefectImg; }
             set
@@ -29,25 +68,12 @@ namespace Klarf.ViewModel
         }
 
 
-        public DefectImgViewerVM() { 
+        public DefectImgViewerVM() {
+            SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
         }
-        public DefectImgViewerVM(IEventAggregator eventAggregator)
-        {
-            _eventAggregator = eventAggregator;
+        
 
-            // FileSelectedEvent 구독
-            _eventAggregator.GetEvent<FileSelectedEvent>().Subscribe(OnFileSelected);
-        }
-
-        private void OnFileSelected(string selectedFilePath)
-        {
-            // 선택된 파일 경로를 이용하여 tifDataReader 생성
-           
-            tifDataReader tifDataReader = new tifDataReader(selectedFilePath);
-
-            // tifDataReader에서 데이터 처리 로직 추가
-            CurDefectImg = tifDataReader.TifImgs[CurDefectID];
-        }
+    
 
         private string selectedFilePath;
         public string SelectedFilePath
@@ -62,29 +88,39 @@ namespace Klarf.ViewModel
             }
         }
 
-        private BitmapImage imageSource;
-        public BitmapImage ImageSource
-        {
-            get { return imageSource; }
-            set
-            {
-                imageSource = value;
-                OnPropertyChanged(nameof(ImageSource));
-            }
-        }
-
+ 
         private void LoadImage()
         {
-            if (!string.IsNullOrEmpty(SelectedFilePath))
+            if (!Directory.Exists(receivedFolderPath))
+                return;
+
+            var tifFiles = Directory.GetFiles(receivedFolderPath, "*.tif");
+            if (tifFiles.Length == 0)
+                return;
+
+            var tifFile = tifFiles[0];
+            tiffDecoder = new TiffBitmapDecoder(new Uri(tifFile, UriKind.Absolute), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+
+            if (tiffDecoder.Frames.Count > 0 && receivedDefectShow)
             {
-                ImageSource = new BitmapImage(new Uri(SelectedFilePath));
-            }
-            else
-            {
-                ImageSource = null;
+                curDefectImg = tiffDecoder.Frames[CurDefectID];
             }
         }
-     
 
+        private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "DefectIndexData")
+            {
+                CurDefectID = SharedData.Instance.DefectIndexData;
+            }
+            else if (e.PropertyName == "DefectShowData")
+            {
+                ReceivedDefectShow = SharedData.Instance.DefectShowData;
+            }
+            else if (e.PropertyName == "FolderPath")
+            {
+                ReceivedFolderPath = SharedData.Instance.FolderPath;
+            }
+        }
     }
 }

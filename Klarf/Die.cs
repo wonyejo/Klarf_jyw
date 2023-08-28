@@ -11,8 +11,8 @@ namespace Klarf.Model
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public bool IsDefectInDie { get; set; } // 색상 필드 추가
-
+        public bool IsDefectInDie { get; set; }
+        public List<Defect> Defects { get; set; } = new List<Defect>();
         public Die(int x, int y)
         {
             X = x;

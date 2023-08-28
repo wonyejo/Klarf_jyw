@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using Klarf.Model;
 using Prism.Events;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Klarf.ViewModel
 {
@@ -19,7 +20,7 @@ namespace Klarf.ViewModel
         private KlarfFile selectedFile;
         private string selectedFolderPath;
         private RelayCommand _openFolderCommand;
-        private IEventAggregator _eventAggregator;
+      
 
 
         #endregion
@@ -38,7 +39,7 @@ namespace Klarf.ViewModel
                     selectedFile = value;
                     OnPropertyChanged(nameof(selectedFile));
 
-                    _eventAggregator.GetEvent<FileSelectedEvent>().Publish(selectedFile.Path);
+                   
                 }
             }
         }
@@ -87,7 +88,7 @@ namespace Klarf.ViewModel
         public FileListViewerVM(IEventAggregator eventAggregator)
         {
             
-            _eventAggregator = eventAggregator;
+           
              klarfPaths = new ObservableCollection<KlarfFile>();
             OpenFolderCommand = new RelayCommand(OpenFolderDialog);
         }
