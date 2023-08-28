@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace Klarf.Model
 {
-    class Die
+    public class Die
     {
         public int X { get; set; }
         public int Y { get; set; }

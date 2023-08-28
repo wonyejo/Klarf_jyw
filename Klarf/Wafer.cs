@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 namespace Klarf.Model
 {
-    class Wafer
+    public class Wafer
     {
 
     
