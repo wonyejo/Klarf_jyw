@@ -9,14 +9,30 @@ namespace Klarf.Model
     public class Wafer
     {
 
-    
-        DateTime FileTimestamp;
-        string LotID;
-        string WaferID;
-        string DeviceID;
+
+        public string FileTimestamp;
+        public string LotID;
+        public string WaferID;
+       
 
         public List<Die> Dies { get; set; } = new List<Die>();
 
+        public Wafer()
+        {
+
+        }
+        public Wafer(string fileTimestamp, string lotID, string waferID)
+        {
+            FileTimestamp = fileTimestamp;
+            LotID = lotID;
+            WaferID = waferID;
+           
+        }
+
+        public void setDies(List<Die> dies)
+        {
+            Dies = dies;
+        }
         //private BitmapSource VisualizeWaferMap(Die[] Dies, BitmapImage baseImage)
         //{
         //    DrawingVisual drawingVisual = new DrawingVisual();

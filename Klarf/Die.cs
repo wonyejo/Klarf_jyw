@@ -18,6 +18,9 @@ namespace Klarf.Model
             X = x;
             Y = y;
         }
-
+        public void AddDefect(Defect defect)
+        {
+            Defects.Add(defect);
+        }
     }
 }

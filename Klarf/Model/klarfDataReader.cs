@@ -8,6 +8,7 @@ namespace Klarf.Model
        
         public ObservableCollection<Defect> Defects { get; private set; }
         public ObservableCollection<Die> Dies { get; private set; }
+        public Wafer WaferInfo { get; private set; }
 
         public KlarfDataReader(string klarfFilePath)
         {
@@ -19,6 +20,34 @@ namespace Klarf.Model
 
             foreach (string line in lines)
             {
+
+               if (line.StartsWith("FileTimestamp"))
+                {
+                    // 파일 타임스탬프 정보 추출
+                    string[] parts = line.Split(' ');
+                    string date = parts[1];
+                    string time = parts[2];
+                    string fileTimestamp = $"{date} {time}";
+                    // 파일 타임스탬프 정보로 Wafer 객체 초기화
+                    WaferInfo.FileTimestamp = fileTimestamp;
+                }
+                else if (line.StartsWith("LotID"))
+                {
+                    // LotID 정보 추출
+                    string[] parts = line.Split(' ');
+                    string lotID = parts[1].Trim('"'); // 따옴표 제거
+                    // LotID 정보로 Wafer 객체 초기화
+                    WaferInfo.LotID = lotID;
+                }
+                else if (line.StartsWith("WaferID"))
+                {
+                    // WaferID 정보 추출
+                    string[] parts = line.Split(' ');
+                    string waferID = parts[1].Trim('"'); // 따옴표 제거
+                    // WaferID 정보로 Wafer 객체 초기화
+                    WaferInfo.WaferID = waferID;
+                }
+
                 if (line.StartsWith("SampleTestPlan"))
                 {
                    
@@ -50,9 +79,8 @@ namespace Klarf.Model
                 }
                 else if (inDefectListSection)
                 {
-                    Defect defect = new Defect(line);
-                    Defects.Add(defect);
-                    
+                  
+                   
                 }
             }
         }

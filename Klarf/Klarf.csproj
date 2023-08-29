@@ -95,7 +95,6 @@
     <Compile Include="KlarfFile.cs" />
     <Compile Include="Die.cs" />
     <Compile Include="Model\tifDataReader.cs" />
-    <Compile Include="ViewModel\MainVM.cs" />
     <Compile Include="ViewModel\SharedData.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WaferMapViewerVM.cs" />
@@ -157,6 +156,11 @@
   <ItemGroup>
     <None Include="View\App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\free-icon-fast-forward-254422.png" />
+    <Resource Include="Img\free-icon-left-arrow-254427.png" />
+    <Resource Include="Img\free-icon-rewind-254440.png" />
+    <Resource Include="Img\free-icon-right-arrow-254442.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,27 +28,26 @@ namespace Klarf.Model
         public int ImageList { get; set; }
 
         // 생성자로 데이터를 초기화하는 메서드
-        public Defect(string line)
-        {
-            string[] parts = line.Split(' ');
-            DefectId = int.Parse(parts[0]);
-            XRel = double.Parse(parts[1]);
-            YRel = double.Parse(parts[2]);
-            XIndex = int.Parse(parts[3]);
-            YIndex = int.Parse(parts[4]);
-            XSize = int.Parse(parts[5]);
-            YSize = int.Parse(parts[6]);
-            DefectArea = int.Parse(parts[7]);
-            DSize = int.Parse(parts[8]);
-            ClassNumber = int.Parse(parts[9]);
-            Test = int.Parse(parts[10]);
-            ClusterNumber = int.Parse(parts[11]);
-            RoughBinNumber = int.Parse(parts[12]);
-            FineBinNumber = int.Parse(parts[13]);
-            ReviewSample = int.Parse(parts[14]);
-            ImageCount = int.Parse(parts[15]);
-            ImageList = int.Parse(parts[16]);
-       
-        }
+public Defect(int defectId, double xRel, double yRel, int xIndex, int yIndex, int xSize, int ySize, int defectArea, int dSize, int classNumber, int test, int clusterNumber, int roughBinNumber, int fineBinNumber, int reviewSample, int imageCount, int imageList)
+{
+    DefectId = defectId;
+    XRel = xRel;
+    YRel = yRel;
+    XIndex = xIndex;
+    YIndex = yIndex;
+    XSize = xSize;
+    YSize = ySize;
+    DefectArea = defectArea;
+    DSize = dSize;
+    ClassNumber = classNumber;
+    Test = test;
+    ClusterNumber = clusterNumber;
+    RoughBinNumber = roughBinNumber;
+    FineBinNumber = fineBinNumber;
+    ReviewSample = reviewSample;
+    ImageCount = imageCount;
+    ImageList = imageList;
+}
+
     }
 }
