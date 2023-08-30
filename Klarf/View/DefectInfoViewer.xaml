@@ -58,10 +58,10 @@
             <Button Width="20" Height="20" Grid.Row="4" Grid.Column="4">
                 <Image Source="/Klarf;component/Img/free-icon-fast-forward-254422.png"></Image>
             </Button>
-            <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding DefectList}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding DieList}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" />
-            <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,49,74.444,0">
+            <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"  />
+            <TextBlock Text="{Binding DieList}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding DefectList}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" />
+            <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"  >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Defect ID" Binding="{Binding DefectId}" />
                     <DataGridTextColumn Header="X Relative" Binding="{Binding XRel}" />
@@ -71,8 +71,17 @@
                     <DataGridTextColumn Header="X Size" Binding="{Binding XSize}" />
                     <DataGridTextColumn Header="Y Size" Binding="{Binding YSize}" />
                     <DataGridTextColumn Header="Defect Area" Binding="{Binding DefectArea}" />
-                    
-                   
+                    <DataGridTextColumn Header="DSize" Binding="{Binding DSize}" />
+                    <DataGridTextColumn Header="Class Number" Binding="{Binding ClassNumber}" />
+                    <DataGridTextColumn Header="Test" Binding="{Binding Test}" />
+                    <DataGridTextColumn Header="Cluster Number" Binding="{Binding ClusterNumber}" />
+                    <DataGridTextColumn Header="Rough Bin Number" Binding="{Binding RoughBinNumber}" />
+                    <DataGridTextColumn Header="Fine Bin Number" Binding="{Binding FineBinNumber}" />
+                    <DataGridTextColumn Header="Review Sample" Binding="{Binding ReviewSample}" />
+                    <DataGridTextColumn Header="Image Count" Binding="{Binding ImageCount}" />
+                    <DataGridTextColumn Header="Image List" Binding="{Binding ImageList}" />
+
+
                 </DataGrid.Columns>
             </DataGrid>
 

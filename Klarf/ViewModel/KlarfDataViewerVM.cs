@@ -14,24 +14,22 @@ namespace Klarf.ViewModel
     {
 
         public Wafer wafer;
-        public List<Defect> defects;
-    
-       
+      
         private int currentDieIndex;
         private int currentDefectIndex;
         private int currentDieDefectIndex;
         private Defect selectedDefect;
         private Die selectedDie;
-
+        private ObservableCollection<Defect> defects;
 
         public KlarfDataViewerVM()
         {
             LoadWaferData(SharedData.Instance.Wafer);
-            LoadDefectData(SharedData.Instance.Defects);
+            if(Wafer!=null) LoadDefectData(SharedData.Instance.Defects);
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
-            
-            defects = new List<Defect>();
-          
+
+            defects = new ObservableCollection<Defect>();
+
         }
         public Wafer Wafer
         {
@@ -48,7 +46,7 @@ namespace Klarf.ViewModel
             }       
 
         }
-        public List<Defect> Defects
+        public ObservableCollection<Defect> Defects
         {
             get => defects;
             set
@@ -182,8 +180,11 @@ namespace Klarf.ViewModel
         }
          private void LoadDefectData(List<Defect> Defects)
         {
-                defects = Defects;
-            
+           
+            foreach (var defect in Defects)
+            {
+                defects.Add(defect);
+            }
         }
       
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
