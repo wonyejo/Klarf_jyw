@@ -24,8 +24,11 @@ namespace Klarf.ViewModel
             {
                 wafer = value;
                 OnPropertyChanged(nameof(Wafer));
-                
 
+                if (wafer != null)
+                {
+                    DrawWaferMap(wafer);
+                }
             }
 
         }
@@ -35,8 +38,13 @@ namespace Klarf.ViewModel
         public WaferMapViewerVM()
         {
             WaferMapShapes = new ObservableCollection<Shape>();
-            LoadWaferData(SharedData.Instance.Wafer);
-            if (Wafer != null) DrawWaferMap(Wafer);
+
+            if (Wafer != null)
+            {
+                LoadWaferData(SharedData.Instance.Wafer);
+                DrawWaferMap(Wafer);
+            }
+
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
 
             //defects = new ObservableCollection<Defect>();
@@ -51,10 +59,8 @@ namespace Klarf.ViewModel
         {
             if (e.PropertyName == "Wafer")
             {
-                LoadWaferData(SharedData.Instance.Wafer);
-
+                Wafer = SharedData.Instance.Wafer;
             }
-           
 
         }
 

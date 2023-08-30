@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:Klarf.View"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:Klarf.ViewModel"
-             d:DesignHeight="200" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="400">
     
     <UserControl.DataContext>
         <vm:WaferMapViewerVM>
@@ -15,14 +15,33 @@
     </UserControl.DataContext>
     <Grid Grid.Row="0" Grid.Column="0" x:Name="WaferMap">
         <!-- Rectangle for drawing the wafer map -->
-       
-            <ItemsControl ItemsSource="{Binding WaferMapShapes}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-       
+
+
+        <ItemsControl ItemsSource="{Binding WaferMapShapes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Width="500" Height="500">
+                        <!-- 크기를 조절 -->
+                        
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="10" Height="10" Stroke="Black" StrokeThickness="1">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="Gray"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefectInDie}" Value="True">
+                                        <Setter Property="Fill" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
