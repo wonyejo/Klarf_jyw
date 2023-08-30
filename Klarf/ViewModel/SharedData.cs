@@ -16,6 +16,7 @@ namespace Klarf.ViewModel
         private bool defectShowData;
         private int defectIndexData;
         public event PropertyChangedEventHandler PropertyChanged;
+        private List<Defect> defects;
 
         public static SharedData Instance
         {
@@ -46,6 +47,16 @@ namespace Klarf.ViewModel
             {
                 wafer = value;
                 OnPropertyChanged("Wafer");
+            }
+        }
+        public List<Defect> Defects
+
+        {
+            get { return defects; }
+            set
+            {
+                defects = value;
+                OnPropertyChanged("Defects");
             }
         }
         public bool DefectShowData

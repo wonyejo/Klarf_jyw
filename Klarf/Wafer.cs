@@ -15,7 +15,7 @@ namespace Klarf.Model
         public string WaferID;
        
 
-        public List<Die> Dies { get; set; } = new List<Die>();
+        public List<Die> Dies { get; set; }
 
         public Wafer()
         {

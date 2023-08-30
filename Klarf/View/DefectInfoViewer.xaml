@@ -13,6 +13,8 @@
         <mv:KlarfDataViewerVM>
         </mv:KlarfDataViewerVM>
     </UserControl.DataContext>
+
+
     <Grid Grid.Row="1" Grid.Column="1" x:Name="defectInfo">
         <Grid>
             <Grid.RowDefinitions>
@@ -28,15 +30,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="0.5*" />
                 <ColumnDefinition Width="0.3*" />
-                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.3*" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Defect Die Info" Grid.Row="0" />
             <TextBlock Text="Sample Infomation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding wafer.FileTimestamp}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding wafer.WaferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding wafer.LotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding wafer.DeviceID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
-            <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2">
+            <TextBlock Text="{Binding Wafer.FileTimestamp}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding Wafer.WaferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding Wafer.LotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+
+            <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2" >
                 <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
             </Button>
             <Button Width="20" Height="20" Grid.Row="2" Grid.Column="4">
@@ -59,9 +61,21 @@
             <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" />
             <TextBlock Text="{Binding DefectList}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" />
             <TextBlock Text="{Binding DieList}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" />
-            <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="True" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,49,74.444,0">
-                <!-- 다른 설정 및 스타일 설정 가능 -->
+            <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,49,74.444,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Defect ID" Binding="{Binding DefectId}" />
+                    <DataGridTextColumn Header="X Relative" Binding="{Binding XRel}" />
+                    <DataGridTextColumn Header="Y Relative" Binding="{Binding YRel}" />
+                    <DataGridTextColumn Header="X Index" Binding="{Binding XIndex}" />
+                    <DataGridTextColumn Header="Y Index" Binding="{Binding YIndex}" />
+                    <DataGridTextColumn Header="X Size" Binding="{Binding XSize}" />
+                    <DataGridTextColumn Header="Y Size" Binding="{Binding YSize}" />
+                    <DataGridTextColumn Header="Defect Area" Binding="{Binding DefectArea}" />
+                    
+                   
+                </DataGrid.Columns>
             </DataGrid>
+
         </Grid>
     </Grid>
 </UserControl>

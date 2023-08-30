@@ -14,13 +14,88 @@ namespace Klarf.ViewModel
     {
 
         public Wafer wafer;
-        private ObservableCollection<Defect> defects;
-        private Defect selectedDefect;
-        private Die SelectedDie;
+        public List<Defect> defects;
+    
+       
         private int currentDieIndex;
         private int currentDefectIndex;
         private int currentDieDefectIndex;
+        private Defect selectedDefect;
+        private Die selectedDie;
 
+
+        public KlarfDataViewerVM()
+        {
+            LoadWaferData(SharedData.Instance.Wafer);
+            LoadDefectData(SharedData.Instance.Defects);
+            SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
+            
+            defects = new List<Defect>();
+          
+        }
+        public Wafer Wafer
+        {
+            get { return wafer; }
+            set
+            {
+                wafer = value;
+                OnPropertyChanged(nameof(Wafer));
+                OnPropertyChanged(nameof(DefectList));
+                OnPropertyChanged(nameof(DieList));
+                OnPropertyChanged(nameof(TotalDefects));
+                OnPropertyChanged(nameof(TotalDies));
+                
+            }       
+
+        }
+        public List<Defect> Defects
+        {
+            get => defects;
+            set
+            {
+                defects = value;
+                OnPropertyChanged(nameof(Defects));
+            }
+        }
+        public Die SelectedDie
+        {
+            get => selectedDie;
+            set
+            {
+                if (selectedDie != value)
+                {
+                    selectedDie = value;
+                    OnPropertyChanged(nameof(SelectedDie));
+                  
+                }
+            }
+        }
+        public Defect SelectedDefect
+        {
+            get => selectedDefect;
+            set
+            {
+                if (selectedDefect != value)
+                {
+                    selectedDefect = value;
+                    OnPropertyChanged(nameof(SelectedDefect));
+
+                    
+
+                    for (int i = 0; i < Wafer.Dies.Count; i++)
+                    {
+                        Die currentDie = Wafer.Dies[i];
+                        if (currentDie.Defects.Contains(selectedDefect))
+                        {
+                            SelectedDie = currentDie;
+                            CurrentDieIndex = i;
+                            CurrentDieDefectIndex = currentDie.Defects.IndexOf(selectedDefect);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         public int CurrentDefectIndex
         {
             get { return currentDefectIndex; }
@@ -89,23 +164,41 @@ namespace Klarf.ViewModel
             get { return SelectedDie?.Defects?.Count ?? 0; }
         }
 
-        public KlarfDataViewerVM()
+        private void PreviousDefect()
         {
-            defects = new ObservableCollection<Defect>();
+            if (CurrentDefectIndex > 0)
+            {
+                CurrentDefectIndex--;
+                selectedDefect = defects[CurrentDefectIndex];
+                SharedData.Instance.DefectIndexData = currentDefectIndex;
+            }
         }
 
 
         private void LoadWaferData(Wafer loadedWafer)
         {
-            wafer = loadedWafer;
+            Wafer = loadedWafer;
+
         }
+         private void LoadDefectData(List<Defect> Defects)
+        {
+                defects = Defects;
+            
+        }
+      
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Wafer")
             {
                 LoadWaferData(SharedData.Instance.Wafer);
+                
             }
-        }
+            if(e.PropertyName =="Defects")
+            {
+                LoadDefectData(SharedData.Instance.Defects);
+            }
+           
+        }   
         public string DieList
         {
             get
@@ -143,5 +236,6 @@ namespace Klarf.ViewModel
                
             }
         }
+
     }
 }

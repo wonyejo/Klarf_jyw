@@ -199,8 +199,9 @@ namespace Klarf.ViewModel
                 else if (inDefectListSection)
                 {
                     string[] parts = line.Split(' ');
-
-                    Defect defect = new Defect(
+                    if (parts.Length >= 17)
+                    {
+                        Defect defect = new Defect(
                         int.Parse(parts[0]),
                         double.Parse(parts[1]),
                         double.Parse(parts[2]),
@@ -218,27 +219,28 @@ namespace Klarf.ViewModel
                         int.Parse(parts[14]),
                         int.Parse(parts[15]),
                         int.Parse(parts[16])
-                    );
-                    Defects.Add(defect);
-                }
-            }
-            foreach (Defect defect in Defects)
-            {
-                int xIndex = defect.XIndex; // Defect의 xindex 가져오기
-                int yIndex = defect.YIndex; // Defect의 yindex 가져오기
+                        );
+                        Defects.Add(defect);
+                        int xIndex = defect.XIndex; // Defect의 xindex 가져오기
+                        int yIndex = defect.YIndex; // Defect의 yindex 가져오기
 
-                // Dies에서 xindex와 yindex가 일치하는 Die를 찾기
-                Die matchingDie = Dies.FirstOrDefault(die => die.X == xIndex && die.Y == yIndex);
+                        // Dies에서 xindex와 yindex가 일치하는 Die를 찾기
+                        Die matchingDie = Dies.FirstOrDefault(die => die.X == xIndex && die.Y == yIndex);
 
-                if (matchingDie != null)
-                {
-                    matchingDie.AddDefect(defect); // 해당 Die의 Defect 리스트에 Defect 추가
+                        if (matchingDie != null)
+                        {
+                            matchingDie.AddDefect(defect); // 해당 Die의 Defect 리스트에 Defect 추가
+                        }
+                    }
+                    
                 }
+                
             }
+           
 
             WaferInfo.setDies(Dies);
             SharedData.Instance.Wafer = WaferInfo;
-            
+            SharedData.Instance.Defects = Defects;
         }
 
         #endregion
