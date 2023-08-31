@@ -63,7 +63,7 @@ namespace Klarf.ViewModel
             set
             {
                 curDefectImg = value;
-                OnPropertyChanged(nameof(curDefectImg));
+                OnPropertyChanged(nameof(CurDefectImg));
             }
         }
 
@@ -101,7 +101,7 @@ namespace Klarf.ViewModel
             var tifFile = tifFiles[0];
             tiffDecoder = new TiffBitmapDecoder(new Uri(tifFile, UriKind.Absolute), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
 
-            if (tiffDecoder.Frames.Count > 0 && receivedDefectShow)
+            if (tiffDecoder.Frames.Count > 0)
             {
                 curDefectImg = tiffDecoder.Frames[CurDefectID];
             }

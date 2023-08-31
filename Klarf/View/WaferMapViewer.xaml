@@ -20,25 +20,26 @@
         <ItemsControl ItemsSource="{Binding WaferMapShapes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Width="500" Height="500">
-                        <!-- 크기를 조절 -->
-                        
+                    <Canvas Width="380" Height="380" Background="Black">
+                                             
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Width="10" Height="10" Stroke="Black" StrokeThickness="1">
+                    <Rectangle Width="5" Height="5" Stroke="#392f31" StrokeThickness="1">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Fill" Value="Gray"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsDefectInDie}" Value="True">
                                         <Setter Property="Fill" Value="Red"/>
+                                        <Setter Property="Stroke" Value="White"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Rectangle.Style>
+                        
                     </Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

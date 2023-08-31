@@ -241,6 +241,7 @@ namespace Klarf.ViewModel
             WaferInfo.setDies(Dies);
             SharedData.Instance.Wafer = WaferInfo;
             SharedData.Instance.Defects = Defects;
+            SharedData.Instance.FolderPath = SelectedFolderPath;
         }
 
         #endregion

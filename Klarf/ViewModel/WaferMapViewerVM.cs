@@ -13,7 +13,7 @@ using System.Windows.Media;
 
 namespace Klarf.ViewModel
 {
-    class WaferMapViewerVM: ViewModelBase
+    class WaferMapViewerVM : ViewModelBase
     {
         public Wafer wafer;
 
@@ -33,6 +33,7 @@ namespace Klarf.ViewModel
 
         }
 
+
         public ObservableCollection<Shape> WaferMapShapes { get; set; } // Shapes 컬렉션을 추가
 
         public WaferMapViewerVM()
@@ -49,7 +50,7 @@ namespace Klarf.ViewModel
 
             //defects = new ObservableCollection<Defect>();
         }
-       
+
         private void LoadWaferData(Wafer loadedWafer)
         {
             Wafer = loadedWafer;
@@ -64,15 +65,21 @@ namespace Klarf.ViewModel
 
         }
 
-       private void DrawWaferMap(Wafer wafer) {
+        private void DrawWaferMap(Wafer wafer)
+        {
             WaferMapShapes.Clear(); // 기존의 Shapes 제거
+
+            double minX = wafer.Dies.Min(die => die.X);
+            double maxY = wafer.Dies.Max(die => die.Y);
 
             foreach (var die in wafer.Dies)
             {
                 var rect = new Rectangle();
-                rect.Width = 10;
-                rect.Height = 10;
-                rect.Stroke = Brushes.Black; 
+                double cellWidth = 380.0 / wafer.GridWidth; // 화면의 크기를 웨이퍼 그리드 값으로 나눔
+                double cellHeight = 380.0 / wafer.GridHeight;
+                rect.Width = cellWidth;
+                rect.Height = cellHeight;
+                rect.Stroke = Brushes.Gray;
                 rect.StrokeThickness = 1;
 
                 if (die.IsDefectInDie)
@@ -84,8 +91,10 @@ namespace Klarf.ViewModel
                     rect.Fill = Brushes.Gray;
                 }
 
-                double x = die.X + 9;
-                double y = Math.Abs(die.Y - 24);
+                // die의 좌표를 상대좌표로 변환하여 적용
+                double x = (die.X - minX) * cellWidth;
+                double y = (maxY - die.Y) * cellHeight;
+
                 Canvas.SetLeft(rect, x);
                 Canvas.SetTop(rect, y);
 

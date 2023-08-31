@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using System.Linq;
 namespace Klarf.Model
 {
     public class Wafer
@@ -14,6 +15,10 @@ namespace Klarf.Model
         public string LotID;
         public string WaferID;
        
+        // Wafer 클래스에 추가된 필드
+        public int GridWidth { get; private set; }
+        public int GridHeight { get; private set; }
+
 
         public List<Die> Dies { get; set; }
 
@@ -33,7 +38,28 @@ namespace Klarf.Model
         {
             Dies = dies;
         }
-       
+        public void CalculateGridDimensions()
+        {
+            if (Dies == null || Dies.Count == 0)
+            {
+                GridWidth = 0;
+                GridHeight = 0;
+                return;
+            }
+
+            double minDieX = Dies.Min(die => die.X);
+            double maxDieX = Dies.Max(die => die.X);
+            double minDieY = Dies.Min(die => die.Y);
+            double maxDieY = Dies.Max(die => die.Y);
+
+            double dieWidth = maxDieX - minDieX;
+            double dieHeight = maxDieY - minDieY;
+
+            GridWidth = (int)Math.Ceiling(dieWidth / 25);
+            GridHeight = (int)Math.Ceiling(dieHeight / 10);
+        }
+
+
 
 
 
