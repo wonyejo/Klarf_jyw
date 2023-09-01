@@ -68,13 +68,12 @@ namespace Klarf.ViewModel
         }
 
 
-        public DefectImgViewerVM()
-        {
+        public DefectImgViewerVM() {
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
         }
+        
 
-
-
+    
 
         private string selectedFilePath;
         public string SelectedFilePath
@@ -89,7 +88,7 @@ namespace Klarf.ViewModel
             }
         }
 
-
+ 
         private void LoadImage()
         {
             if (!Directory.Exists(receivedFolderPath))
@@ -114,7 +113,10 @@ namespace Klarf.ViewModel
             {
                 CurDefectID = SharedData.Instance.DefectIndexData;
             }
-          
+            else if (e.PropertyName == "DefectShowData")
+            {
+                ReceivedDefectShow = SharedData.Instance.DefectShowData;
+            }
             else if (e.PropertyName == "FolderPath")
             {
                 ReceivedFolderPath = SharedData.Instance.FolderPath;

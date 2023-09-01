@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace Klarf.Model
 {
     public class Wafer
@@ -14,14 +14,36 @@ namespace Klarf.Model
         public string FileTimestamp;
         public string LotID;
         public string WaferID;
-       
-        // Wafer 클래스에 추가된 필드
-        public int GridWidth { get; private set; }
-        public int GridHeight { get; private set; }
+        public Tuple<int, int> GridCoordinate { get; set; }
+         public int GridWidth
+        {
+            get
+            {
+                if (Dies == null || Dies.Count == 0)
+                    return 0;
 
+                int maxX = Dies.Max(die => die.X);
+                int minX = Dies.Min(die => die.X);
 
+                return maxX - minX + 1;
+            }
+        }
+
+        public int GridHeight
+        {
+            get
+            {
+                if (Dies == null || Dies.Count == 0)
+                    return 0;
+
+                int maxY = Dies.Max(die => die.Y);
+                int minY = Dies.Min(die => die.Y);
+
+                return maxY - minY + 1;
+            }
+        }
         public List<Die> Dies { get; set; }
-
+  
         public Wafer()
         {
 
@@ -38,29 +60,8 @@ namespace Klarf.Model
         {
             Dies = dies;
         }
-        public void CalculateGridDimensions()
-        {
-            if (Dies == null || Dies.Count == 0)
-            {
-                GridWidth = 0;
-                GridHeight = 0;
-                return;
-            }
 
-            double minDieX = Dies.Min(die => die.X);
-            double maxDieX = Dies.Max(die => die.X);
-            double minDieY = Dies.Min(die => die.Y);
-            double maxDieY = Dies.Max(die => die.Y);
-
-            double dieWidth = maxDieX - minDieX;
-            double dieHeight = maxDieY - minDieY;
-
-            GridWidth = (int)Math.Ceiling(dieWidth / 25);
-            GridHeight = (int)Math.Ceiling(dieHeight / 10);
-        }
-
-
-
+       
 
 
     }

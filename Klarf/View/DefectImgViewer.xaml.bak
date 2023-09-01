@@ -8,8 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
     <UserControl.DataContext>
-        <mv:DefectImgViewerVM></mv:DefectImgViewerVM></UserControl.DataContext>
-    <Grid Grid.Row="0" Grid.Column="1" x:Name="tifImg">
+        <mv:DefectImgViewerVM></mv:DefectImgViewerVM>
+    </UserControl.DataContext>
+    <Grid>
         <Image x:Name="DefectImg" Stretch="Uniform" Source="{Binding CurDefectImg}"/>
     </Grid>
     

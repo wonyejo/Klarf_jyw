@@ -95,7 +95,6 @@
     <Compile Include="KlarfFile.cs" />
     <Compile Include="Die.cs" />
     <Compile Include="Model\tifDataReader.cs" />
-    <Compile Include="ViewModel\DieViewModel.cs" />
     <Compile Include="ViewModel\SharedData.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WaferMapViewerVM.cs" />

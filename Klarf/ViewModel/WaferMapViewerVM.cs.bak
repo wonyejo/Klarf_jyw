@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Klarf.Model;
 using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight.Messaging;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -84,12 +85,10 @@ namespace Klarf.ViewModel
                 if (die.IsDefectInDie)
                 {
                     rect.Fill = Brushes.Red;
-                    rect.Stroke = Brushes.White;
                 }
                 else
                 {
                     rect.Fill = Brushes.Gray;
-                    rect.Stroke = Brushes.DarkGray;
                 }
 
                 // die의 좌표를 상대좌표로 변환하여 적용
