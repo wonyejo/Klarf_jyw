@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Klarf.Model
 {
-    public class Defect3
+    public class Defect
     {
         public int DefectId { get; set; }
         public double XRel { get; set; }
