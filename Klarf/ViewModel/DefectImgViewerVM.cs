@@ -1,10 +1,10 @@
-﻿using Klarf.Model;
+﻿using Klarf.View;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
-using GalaSoft.MvvmLight.Messaging;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Klarf.ViewModel
 {
@@ -38,7 +38,7 @@ namespace Klarf.ViewModel
                 if (curDefectID != value)
                 {
                     curDefectID = value;
-                    OnPropertyChanged(nameof(curDefectID));
+                    OnPropertyChanged(nameof(CurDefectID));
                     LoadImage();
                 }
             }
@@ -73,9 +73,6 @@ namespace Klarf.ViewModel
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
         }
 
-
-
-
         private string selectedFilePath;
         public string SelectedFilePath
         {
@@ -88,7 +85,7 @@ namespace Klarf.ViewModel
                 LoadImage(); // 이미지 로드 메서드 호출
             }
         }
-
+       
 
         private void LoadImage()
         {
@@ -104,15 +101,17 @@ namespace Klarf.ViewModel
 
             if (tiffDecoder.Frames.Count > 0)
             {
-                curDefectImg = tiffDecoder.Frames[CurDefectID];
+                CurDefectImg = tiffDecoder.Frames[CurDefectID];
+              
+
             }
         }
 
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "DefectIndexData")
+            if (e.PropertyName == "DefectIndex")
             {
-                CurDefectID = SharedData.Instance.DefectIndexData;
+                CurDefectID = SharedData.Instance.DefectIndex;
             }
           
             else if (e.PropertyName == "FolderPath")

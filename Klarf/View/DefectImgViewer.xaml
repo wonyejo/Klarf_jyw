@@ -11,6 +11,7 @@
         <mv:DefectImgViewerVM></mv:DefectImgViewerVM></UserControl.DataContext>
     <Grid Grid.Row="0" Grid.Column="1" x:Name="tifImg">
         <Image x:Name="DefectImg" Stretch="Uniform" Source="{Binding CurDefectImg}"/>
+        <TextBlock Text="{Binding Path=DefectIndex}" />
     </Grid>
     
 </UserControl>

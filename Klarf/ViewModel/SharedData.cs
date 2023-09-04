@@ -14,9 +14,12 @@ namespace Klarf.ViewModel
         private Wafer wafer;
         private string folderPath;
         private bool defectShowData;
-        private int defectIndexData;
+        private int defectIndex;
         public event PropertyChangedEventHandler PropertyChanged;
         private List<Defect> defects;
+
+     
+      
 
         public static SharedData Instance
         {
@@ -68,24 +71,26 @@ namespace Klarf.ViewModel
                 OnPropertyChanged("DefectShowData");
             }
         }
-        public int DefectIndexData
+        public int DefectIndex
         {
-            get { return defectIndexData; }
+            get { return defectIndex; }
             set
             {
-                defectIndexData = value;
-                OnPropertyChanged("DefectIndexData");
+                defectIndex = value;
+                OnPropertyChanged("DefectIndex");
             }
         }
 
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
+
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+      
     }
 
 }

@@ -8,6 +8,8 @@ using System.Windows.Input;
 
 public class RelayCommand : ICommand
 {
+
+
     private readonly Action<object> _executeWithParam;
     private readonly Action _executeWithoutParam;
     private readonly Func<bool> _canExecute;

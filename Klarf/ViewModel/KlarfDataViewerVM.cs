@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Klarf.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
+
 
 namespace Klarf.ViewModel
 {
@@ -23,13 +25,39 @@ namespace Klarf.ViewModel
 
         public KlarfDataViewerVM()
         {
+            defects = new ObservableCollection<Defect>();
             LoadWaferData(SharedData.Instance.Wafer);
             if(Wafer!=null) LoadDefectData(SharedData.Instance.Defects);
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
-
-            defects = new ObservableCollection<Defect>();
+            GoPrevDefectCommand = new RelayCommand(GoPrevDefect);
+            GoNextDefectCommand = new RelayCommand(GoNextDefect);
+            
 
         }
+
+        public void GoPrevDefect()
+        {
+            if (CurrentDefectIndex > 0)
+            {
+                CurrentDefectIndex--;
+                selectedDefect = defects[CurrentDefectIndex];
+                SharedData.Instance.DefectIndex = currentDefectIndex;
+            }
+            UpdateCurrentDefectIndex();
+        }
+        public void GoNextDefect()
+        {
+            if (CurrentDefectIndex < TotalDefects - 1)
+            {
+                CurrentDefectIndex++;
+                SelectedDefect = Defects[CurrentDefectIndex];
+                SharedData.Instance.DefectIndex = currentDefectIndex;
+            }
+            UpdateCurrentDefectIndex();
+
+        }
+        public ICommand GoPrevDefectCommand { get; private set; }
+        public ICommand GoNextDefectCommand { get; private set; }
         public Wafer Wafer
         {
             get { return wafer; }
@@ -103,6 +131,7 @@ namespace Klarf.ViewModel
                     currentDefectIndex = value;
                     OnPropertyChanged(nameof(CurrentDefectIndex));
                     OnPropertyChanged(nameof(DefectList));
+
                 }
             }
         }
@@ -118,6 +147,14 @@ namespace Klarf.ViewModel
                     OnPropertyChanged(nameof(CurrentDieDefectIndex));
                     OnPropertyChanged(nameof(DieDefectList));
                 }
+            }
+        }
+        private void UpdateCurrentDefectIndex()
+        {
+            if (Defects != null && selectedDefect != null)
+            {
+                CurrentDefectIndex = Defects.IndexOf(selectedDefect);
+                SharedData.Instance.DefectIndex = currentDefectIndex;
             }
         }
 
@@ -150,7 +187,7 @@ namespace Klarf.ViewModel
 
         public int TotalDefects
         {
-            get { return defects.Count; }
+            get { return Defects.Count; }
         }
         public int TotalDies
         {
@@ -161,16 +198,6 @@ namespace Klarf.ViewModel
             get { return SelectedDie?.Defects?.Count ?? 0; }
         }
 
-        private void PreviousDefect()
-        {
-            if (CurrentDefectIndex > 0)
-            {
-                CurrentDefectIndex--;
-                selectedDefect = defects[CurrentDefectIndex];
-                SharedData.Instance.DefectIndexData = currentDefectIndex;
-            }
-        }
-
 
         private void LoadWaferData(Wafer loadedWafer)
         {
@@ -179,11 +206,8 @@ namespace Klarf.ViewModel
         }
          private void LoadDefectData(List<Defect> Defects)
         {
+            this.Defects = new ObservableCollection<Defect>(Defects);
            
-            foreach (var defect in Defects)
-            {
-                defects.Add(defect);
-            }
         }
       
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -236,6 +260,5 @@ namespace Klarf.ViewModel
                
             }
         }
-
     }
 }
