@@ -15,8 +15,6 @@
     </UserControl.DataContext>
     <Grid Grid.Row="0" Grid.Column="0" x:Name="WaferMap">
         <!-- Rectangle for drawing the wafer map -->
-
-
         <ItemsControl ItemsSource="{Binding WaferMapShapes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -47,6 +45,8 @@
                     </Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            
+            
         </ItemsControl>
     </Grid>
 </UserControl>

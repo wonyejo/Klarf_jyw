@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="FileViewer" Grid.Row="0" />
+            <TextBlock Text="FileViewer" Grid.Row="0" FontWeight="Bold"/>
             <Button Content="Open Done Folder" Grid.Row="1" Grid.Column="0" Width="150" Command="{Binding OpenFolderCommand}"/>
             <Button Content="Save all images" Grid.Row="1" Grid.Column="1" Width="100"/>
             <Button Content="Refresh" Grid.Row="1" Grid.Column="2" Width="100"/>

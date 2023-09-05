@@ -32,11 +32,11 @@
                 <ColumnDefinition Width="0.3*" />
                 <ColumnDefinition Width="0.3*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Defect Die Info" Grid.Row="0" />
+            <TextBlock Text="Defect Die Info" Grid.Row="0" FontWeight="Bold" />
             <TextBlock Text="Sample Infomation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding timeStamp}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding waferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding lotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding TimeStamp}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding WaferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding LotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
 
             <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2"  IsEnabled="True" >
                 <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
