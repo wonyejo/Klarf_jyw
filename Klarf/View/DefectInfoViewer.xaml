@@ -61,29 +61,30 @@
             <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Margin="0,0,0.032,0"  />
             <TextBlock Text="{Binding DieList}" Grid.Row="3" Grid.Column="3" Margin="0,0,0.032,0" />
             <TextBlock Text="{Binding DefectList}" Grid.Row="4" Grid.Column="3" Margin="0,0,0.032,0" />
-            <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"  >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Defect ID" Binding="{Binding DefectId}" />
-                    <DataGridTextColumn Header="X Relative" Binding="{Binding XRel}" />
-                    <DataGridTextColumn Header="Y Relative" Binding="{Binding YRel}" />
-                    <DataGridTextColumn Header="X Index" Binding="{Binding XIndex}" />
-                    <DataGridTextColumn Header="Y Index" Binding="{Binding YIndex}" />
-                    <DataGridTextColumn Header="X Size" Binding="{Binding XSize}" />
-                    <DataGridTextColumn Header="Y Size" Binding="{Binding YSize}" />
-                    <DataGridTextColumn Header="Defect Area" Binding="{Binding DefectArea}" />
-                    <DataGridTextColumn Header="DSize" Binding="{Binding DSize}" />
-                    <DataGridTextColumn Header="Class Number" Binding="{Binding ClassNumber}" />
-                    <DataGridTextColumn Header="Test" Binding="{Binding Test}" />
-                    <DataGridTextColumn Header="Cluster Number" Binding="{Binding ClusterNumber}" />
-                    <DataGridTextColumn Header="Rough Bin Number" Binding="{Binding RoughBinNumber}" />
-                    <DataGridTextColumn Header="Fine Bin Number" Binding="{Binding FineBinNumber}" />
-                    <DataGridTextColumn Header="Review Sample" Binding="{Binding ReviewSample}" />
-                    <DataGridTextColumn Header="Image Count" Binding="{Binding ImageCount}" />
-                    <DataGridTextColumn Header="Image List" Binding="{Binding ImageList}" />
+            <ListView ItemsSource="{Binding Defects}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" SelectedItem="{Binding SelectedDefect}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Defect ID" DisplayMemberBinding="{Binding DefectId}" />
+                        <GridViewColumn Header="X Relative" DisplayMemberBinding="{Binding XRel}" />
+                        <GridViewColumn Header="Y Relative" DisplayMemberBinding="{Binding YRel}" />
+                        <GridViewColumn Header="X Index" DisplayMemberBinding="{Binding XIndex}" />
+                        <GridViewColumn Header="Y Index" DisplayMemberBinding="{Binding YIndex}" />
+                        <GridViewColumn Header="X Size" DisplayMemberBinding="{Binding XSize}" />
+                        <GridViewColumn Header="Y Size" DisplayMemberBinding="{Binding YSize}" />
+                        <GridViewColumn Header="Defect Area" DisplayMemberBinding="{Binding DefectArea}" />
+                        <GridViewColumn Header="DSize" DisplayMemberBinding="{Binding DSize}" />
+                        <GridViewColumn Header="Class Number" DisplayMemberBinding="{Binding ClassNumber}" />
+                        <GridViewColumn Header="Test" DisplayMemberBinding="{Binding Test}" />
+                        <GridViewColumn Header="Cluster Number" DisplayMemberBinding="{Binding ClusterNumber}" />
+                        <GridViewColumn Header="Rough Bin Number" DisplayMemberBinding="{Binding RoughBinNumber}" />
+                        <GridViewColumn Header="Fine Bin Number" DisplayMemberBinding="{Binding FineBinNumber}" />
+                        <GridViewColumn Header="Review Sample" DisplayMemberBinding="{Binding ReviewSample}" />
+                        <GridViewColumn Header="Image Count" DisplayMemberBinding="{Binding ImageCount}" />
+                        <GridViewColumn Header="Image List" DisplayMemberBinding="{Binding ImageList}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
-
-                </DataGrid.Columns>
-            </DataGrid>
 
         </Grid>
     </Grid>
