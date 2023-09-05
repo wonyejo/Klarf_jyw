@@ -107,7 +107,8 @@ namespace Klarf.ViewModel
 
         private void LoadFileList(string folderPath)
         {
-            string[] klarfExtensions = { ".001", ".tif" };
+            KlarfPaths.Clear();
+            string[] klarfExtensions = { ".001" };
 
             if (Directory.Exists(folderPath))
             {
