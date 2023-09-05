@@ -14,10 +14,12 @@ namespace Klarf.Model
         public bool IsDefectInDie { get; set; }
         public List<Defect> Defects { get; set; }
         public Tuple<int, int> GridCoordinate { get; set; }
+        public Tuple<int, int> Coordinate { get; set; }
         public Die(int x, int y)
         {
             X = x;
             Y = y;
+            Coordinate = new Tuple<int, int>(x, y);
             Defects = new List<Defect>();
         }
         public void AddDefect(Defect defect)

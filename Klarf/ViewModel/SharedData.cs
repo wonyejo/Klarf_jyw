@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Klarf.ViewModel
 {
@@ -17,9 +18,10 @@ namespace Klarf.ViewModel
         private int defectIndex;
         public event PropertyChangedEventHandler PropertyChanged;
         private List<Defect> defects;
+        private BitmapSource curDefectImg;
+        public TiffBitmapDecoder tiffDecoder;
 
-     
-      
+
 
         public static SharedData Instance
         {
@@ -33,7 +35,15 @@ namespace Klarf.ViewModel
                 return instance;
             }
         }
-
+        public BitmapSource CurDefectImg
+        {
+            get { return curDefectImg; }
+            set
+            {
+                curDefectImg = value;
+                OnPropertyChanged(nameof(CurDefectImg));
+            }
+        }
         public string FolderPath
         {
             get { return folderPath; }

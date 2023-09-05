@@ -7,7 +7,7 @@ using Klarf.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-
+using System.Windows.Media.Imaging;
 
 namespace Klarf.ViewModel
 {
@@ -17,12 +17,13 @@ namespace Klarf.ViewModel
         public Wafer wafer;
       
         private int currentDieIndex;
-        private int currentDefectIndex;
+        private int curDefectID;
         private int currentDieDefectIndex;
         private Defect selectedDefect;
         private Die selectedDie;
         private ObservableCollection<Defect> defects;
-
+        private BitmapSource curDefectImg;
+        public TiffBitmapDecoder tiffDecoder;
         public KlarfDataViewerVM()
         {
             defects = new ObservableCollection<Defect>();
@@ -35,25 +36,42 @@ namespace Klarf.ViewModel
 
         }
 
+        public BitmapSource CurDefectImg
+        {
+            get { return curDefectImg; }
+            set
+            {
+                curDefectImg = value;
+                OnPropertyChanged(nameof(CurDefectImg));
+            }
+        }
+
+        public void LoadTiffData(TiffBitmapDecoder LoadedTiff)
+        {
+            tiffDecoder = LoadedTiff;
+
+        }
         public void GoPrevDefect()
         {
-            if (CurrentDefectIndex > 0)
+            if (CurDefectID > 0)
             {
-                CurrentDefectIndex--;
-                selectedDefect = defects[CurrentDefectIndex];
-                SharedData.Instance.DefectIndex = currentDefectIndex;
+                CurDefectID--;
+                selectedDefect = defects[CurDefectID];
+                SharedData.Instance.DefectIndex = CurDefectID;
+                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
             }
-            UpdateCurrentDefectIndex();
+           
         }
         public void GoNextDefect()
         {
-            if (CurrentDefectIndex < TotalDefects - 1)
+            if (CurDefectID < TotalDefects - 1)
             {
-                CurrentDefectIndex++;
-                SelectedDefect = Defects[CurrentDefectIndex];
-                SharedData.Instance.DefectIndex = currentDefectIndex;
+                CurDefectID++;
+                SelectedDefect = Defects[CurDefectID];
+                SharedData.Instance.DefectIndex = CurDefectID;
+                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
             }
-            UpdateCurrentDefectIndex();
+          
 
         }
         public ICommand GoPrevDefectCommand { get; private set; }
@@ -121,15 +139,15 @@ namespace Klarf.ViewModel
                 }
             }
         }
-        public int CurrentDefectIndex
+        public int CurDefectID
         {
-            get { return currentDefectIndex; }
+            get { return curDefectID; }
             set
             {
-                if (currentDefectIndex != value)
+                if (curDefectID != value)
                 {
-                    currentDefectIndex = value;
-                    OnPropertyChanged(nameof(CurrentDefectIndex));
+                    curDefectID = value;
+                    OnPropertyChanged(nameof(CurDefectID));
                     OnPropertyChanged(nameof(DefectList));
 
                 }
@@ -149,14 +167,7 @@ namespace Klarf.ViewModel
                 }
             }
         }
-        private void UpdateCurrentDefectIndex()
-        {
-            if (Defects != null && selectedDefect != null)
-            {
-                CurrentDefectIndex = Defects.IndexOf(selectedDefect);
-                SharedData.Instance.DefectIndex = currentDefectIndex;
-            }
-        }
+       
 
         public int CurrentDieIndex
         {
@@ -210,19 +221,7 @@ namespace Klarf.ViewModel
            
         }
       
-        private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Wafer")
-            {
-                LoadWaferData(SharedData.Instance.Wafer);
-                
-            }
-            if(e.PropertyName =="Defects")
-            {
-                LoadDefectData(SharedData.Instance.Defects);
-            }
-           
-        }   
+          
         public string DieList
         {
             get
@@ -242,7 +241,7 @@ namespace Klarf.ViewModel
                 {
                     return $"0/0";
                 }
-                return $"{CurrentDefectIndex + 1}/{TotalDefects}";
+                return $"{CurDefectID + 1}/{TotalDefects}";
             }
         }
         public string DieDefectList
@@ -260,5 +259,26 @@ namespace Klarf.ViewModel
                
             }
         }
+        private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Wafer")
+            {
+                LoadWaferData(SharedData.Instance.Wafer);
+                
+            }
+            if(e.PropertyName =="Defects")
+            {
+                LoadDefectData(SharedData.Instance.Defects);
+            }
+            if(e.PropertyName == "tiffDecoder")
+            {
+                LoadTiffData(SharedData.Instance.tiffDecoder);
+            }
+           if(e.PropertyName== "curDefectImg")
+            {
+                SharedData.Instance.CurDefectImg = curDefectImg;
+            }
+        }
+
     }
 }

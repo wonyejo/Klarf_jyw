@@ -25,7 +25,7 @@ namespace Klarf.ViewModel
                 {
                     receivedDefectShow = value;
                     OnPropertyChanged(nameof(receivedDefectShow));
-                    LoadImage();
+                    LoadTiff();
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace Klarf.ViewModel
                 {
                     curDefectID = value;
                     OnPropertyChanged(nameof(CurDefectID));
-                    LoadImage();
+                    LoadTiff();
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace Klarf.ViewModel
                 {
                     receivedFolderPath = value;
                     OnPropertyChanged(nameof(ReceivedFolderPath));
-                    LoadImage();
+                    LoadTiff();
                 }
             }
         }
@@ -82,12 +82,12 @@ namespace Klarf.ViewModel
                 selectedFilePath = value;
                 OnPropertyChanged(nameof(SelectedFilePath));
 
-                LoadImage(); // 이미지 로드 메서드 호출
+                LoadTiff(); // 이미지 로드 메서드 호출
             }
         }
        
 
-        private void LoadImage()
+        private void LoadTiff()
         {
             if (!Directory.Exists(receivedFolderPath))
                 return;
@@ -101,12 +101,15 @@ namespace Klarf.ViewModel
 
             if (tiffDecoder.Frames.Count > 0)
             {
-                CurDefectImg = tiffDecoder.Frames[CurDefectID];
-              
-
+                LoadImg();
+  
             }
         }
 
+        private void LoadImg()
+        {
+            CurDefectImg = tiffDecoder.Frames[CurDefectID];
+        }
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "DefectIndex")
@@ -117,6 +120,14 @@ namespace Klarf.ViewModel
             else if (e.PropertyName == "FolderPath")
             {
                 ReceivedFolderPath = SharedData.Instance.FolderPath;
+            }
+            else if(e.PropertyName== "CurDefectImg")
+            {
+                CurDefectImg = SharedData.Instance.CurDefectImg;
+            }
+            else if (e.PropertyName == "tiffDecoder")
+            {
+                SharedData.Instance.tiffDecoder = tiffDecoder;
             }
         }
     }

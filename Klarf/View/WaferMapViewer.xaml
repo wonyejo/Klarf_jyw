@@ -40,7 +40,10 @@
                                 </Style.Triggers>
                             </Style>
                         </Rectangle.Style>
-                        
+                        <Rectangle.ToolTip>
+                            <ToolTip Content="{Binding Wafer.Die.Coordinate, StringFormat='X: {0}, Y: {1}'}">
+                            </ToolTip>
+                        </Rectangle.ToolTip>
                     </Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
