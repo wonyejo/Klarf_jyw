@@ -16,9 +16,9 @@ namespace Klarf.ViewModel
 
         public Wafer wafer;
       
-        private int currentDieIndex;
+        private int currentDieID;
         private int curDefectID;
-        private int currentDieDefectIndex;
+        private int currentDieDefectID;
         private Defect selectedDefect;
         private Die selectedDie;
         private ObservableCollection<Defect> defects;
@@ -57,7 +57,7 @@ namespace Klarf.ViewModel
             {
                 CurDefectID--;
                 selectedDefect = defects[CurDefectID];
-                SharedData.Instance.DefectIndex = CurDefectID;
+                SharedData.Instance.DefectID = CurDefectID;
                 CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
             }
            
@@ -68,7 +68,7 @@ namespace Klarf.ViewModel
             {
                 CurDefectID++;
                 SelectedDefect = Defects[CurDefectID];
-                SharedData.Instance.DefectIndex = CurDefectID;
+                SharedData.Instance.DefectID = CurDefectID;
                 CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
             }
           
@@ -131,8 +131,8 @@ namespace Klarf.ViewModel
                         if (currentDie.Defects.Contains(selectedDefect))
                         {
                             SelectedDie = currentDie;
-                            CurrentDieIndex = i;
-                            CurrentDieDefectIndex = currentDie.Defects.IndexOf(selectedDefect);
+                            CurrentDieID = i;
+                            CurrentDieDefectID = currentDie.Defects.IndexOf(selectedDefect);
                             break;
                         }
                     }
@@ -154,32 +154,32 @@ namespace Klarf.ViewModel
             }
         }
 
-        public int CurrentDieDefectIndex
+        public int CurrentDieDefectID
         {
-            get { return currentDieDefectIndex; }
+            get { return currentDieDefectID; }
             set
             {
-                if (currentDieDefectIndex != value)
+                if (currentDieDefectID != value)
                 {
-                    currentDieDefectIndex = value;
-                    OnPropertyChanged(nameof(CurrentDieDefectIndex));
+                    currentDieDefectID = value;
+                    OnPropertyChanged(nameof(CurrentDieDefectID));
                     OnPropertyChanged(nameof(DieDefectList));
                 }
             }
         }
        
 
-        public int CurrentDieIndex
+        public int CurrentDieID
         {
-            get { return currentDieIndex; }
+            get { return currentDieID; }
             set
             {
-                if (currentDieIndex != value)
+                if (currentDieID != value)
                 {
-                    currentDieIndex = value;
-                    OnPropertyChanged(nameof(currentDieIndex));
+                    currentDieID = value;
+                    OnPropertyChanged(nameof(currentDieID));
                     OnPropertyChanged(nameof(DieList));
-                    SelectedDie = wafer.Dies[currentDieIndex];
+                    SelectedDie = wafer.Dies[currentDieID];
 
                     if (SelectedDie.Defects.Any())
                     {
@@ -230,7 +230,7 @@ namespace Klarf.ViewModel
                 {
                     return $"0/0";
                 }
-                return $"{CurrentDieIndex + 1}/{TotalDies}";
+                return $"{CurrentDieID + 1}/{TotalDies}";
             }
         }
         public string DefectList
@@ -254,7 +254,7 @@ namespace Klarf.ViewModel
                 }
                 else
                 {
-                    return $"{CurrentDieDefectIndex + 1}/{TotalDieDefects}";
+                    return $"{CurrentDieDefectID + 1}/{TotalDieDefects}";
                 }
                
             }

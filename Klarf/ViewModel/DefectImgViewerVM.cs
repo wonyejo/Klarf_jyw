@@ -98,7 +98,7 @@ namespace Klarf.ViewModel
 
             var tifFile = tifFiles[0];
             tiffDecoder = new TiffBitmapDecoder(new Uri(tifFile, UriKind.Absolute), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-
+            SharedData.Instance.tiffDecoder = tiffDecoder;
             if (tiffDecoder.Frames.Count > 0)
             {
                 LoadImg();
@@ -112,9 +112,9 @@ namespace Klarf.ViewModel
         }
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "DefectIndex")
+            if (e.PropertyName == "DefectID")
             {
-                CurDefectID = SharedData.Instance.DefectIndex;
+                CurDefectID = SharedData.Instance.DefectID;
             }
           
             else if (e.PropertyName == "FolderPath")
@@ -125,10 +125,7 @@ namespace Klarf.ViewModel
             {
                 CurDefectImg = SharedData.Instance.CurDefectImg;
             }
-            else if (e.PropertyName == "tiffDecoder")
-            {
-                SharedData.Instance.tiffDecoder = tiffDecoder;
-            }
+           
         }
     }
 }

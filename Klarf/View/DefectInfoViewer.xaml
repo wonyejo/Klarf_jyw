@@ -38,10 +38,10 @@
             <TextBlock Text="{Binding Wafer.WaferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
             <TextBlock Text="{Binding Wafer.LotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
 
-            <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2" Command="{Binding GoPrevDefectCommand}" IsEnabled="True" >
+            <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2"  IsEnabled="True" >
                 <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
             </Button>
-            <Button Width="20" Height="20" Grid.Row="2" Grid.Column="4" Command="{Binding GoNextDefectCommand}" IsEnabled="True">
+            <Button Width="20" Height="20" Grid.Row="2" Grid.Column="4"  IsEnabled="True">
                 <Image Source="/Klarf;component/Img/free-icon-fast-forward-254422.png" ></Image>
             </Button>
 
@@ -52,15 +52,15 @@
             <Button Width="20" Height="20" Grid.Row="3" Grid.Column="4">
                 <Image Source="/Klarf;component/Img/free-icon-right-arrow-254442.png"></Image></Button>
 
-            <Button Width="20" Height="20"  Grid.Row="4" Grid.Column="2">
+            <Button Width="20" Height="20"  Grid.Row="4" Grid.Column="2" Command="{Binding GoPrevDefectCommand}">
                 <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
             </Button>
-            <Button Width="20" Height="20" Grid.Row="4" Grid.Column="4">
+            <Button Width="20" Height="20" Grid.Row="4" Grid.Column="4" Command="{Binding GoNextDefectCommand}">
                 <Image Source="/Klarf;component/Img/free-icon-fast-forward-254422.png"></Image>
             </Button>
-            <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"  />
-            <TextBlock Text="{Binding DieList}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" />
-            <TextBlock Text="{Binding DefectList}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding DieDefectList}" Grid.Row="2" Grid.Column="3" Margin="0,0,0.032,0"  />
+            <TextBlock Text="{Binding DieList}" Grid.Row="3" Grid.Column="3" Margin="0,0,0.032,0" />
+            <TextBlock Text="{Binding DefectList}" Grid.Row="4" Grid.Column="3" Margin="0,0,0.032,0" />
             <DataGrid ItemsSource="{Binding Defects}" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"  >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Defect ID" Binding="{Binding DefectId}" />
