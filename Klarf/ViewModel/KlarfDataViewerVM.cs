@@ -182,8 +182,8 @@ namespace Klarf.ViewModel
                     }
 
                     SharedData.Instance.DefectID = SelectedDefect.DefectId;
-                    CurDefectID = SelectedDefect.DefectId-1;
-                    CurDefectImg = SharedData.Instance.tiffDecoder.Frames[SelectedDefect.DefectId];
+                    CurDefectID = SelectedDefect.DefectId;
+                    CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
                     OnPropertyChanged(nameof(DieList));
                     OnPropertyChanged(nameof(DieDefectList));
                     OnPropertyChanged(nameof(DefectList));
@@ -304,7 +304,7 @@ namespace Klarf.ViewModel
                 {
                     return $"0/0";
                 }
-                return $"{CurDefectID + 1}/{TotalDefects}";
+                return $"{CurDefectID}/{TotalDefects}";
             }
         }
         public string DieDefectList
