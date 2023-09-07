@@ -11,9 +11,10 @@ namespace Klarf.ViewModel
     {
         #region[필드]
         private Die die;
+        private bool isSelected;
         #endregion
         #region[속성]
-       
+
 
         public Die Die
         {
@@ -33,6 +34,19 @@ namespace Klarf.ViewModel
                     return Die.GridCoordinate;
                 }
                 return null;
+            }
+        }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
             }
         }
         #endregion

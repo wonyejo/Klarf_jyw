@@ -15,6 +15,7 @@ namespace Klarf.Model
         public List<Defect> Defects { get; set; }
         public Tuple<int, int> GridCoordinate { get; set; }
         public Tuple<int, int> Coordinate { get; set; }
+
         public Die(int x, int y)
         {
             X = x;
