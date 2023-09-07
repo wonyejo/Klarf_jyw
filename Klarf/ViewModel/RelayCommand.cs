@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-
 public class RelayCommand : ICommand
 {
-
+    #region 필드
 
     private readonly Action<object> _executeWithParam;
     private readonly Action _executeWithoutParam;
     private readonly Func<bool> _canExecute;
+
+    #endregion
+
+    #region 생성자
 
     public RelayCommand(Action<object> execute, Func<bool> canExecute = null)
     {
@@ -25,6 +28,10 @@ public class RelayCommand : ICommand
         _executeWithoutParam = execute ?? throw new ArgumentNullException(nameof(execute));
         _canExecute = canExecute;
     }
+
+    #endregion
+
+    #region 메서드
 
     public bool CanExecute(object parameter)
     {
@@ -48,4 +55,6 @@ public class RelayCommand : ICommand
         add { CommandManager.RequerySuggested += value; }
         remove { CommandManager.RequerySuggested -= value; }
     }
+
+    #endregion
 }

@@ -40,6 +40,42 @@ namespace Klarf.ViewModel
         #endregion
 
         #region 속성
+        public Wafer Wafer
+        {
+            get { return wafer; }
+            set
+            {
+                wafer = value;
+                OnPropertyChanged(nameof(Wafer));
+                OnPropertyChanged(nameof(DefectList));
+                OnPropertyChanged(nameof(DieList));
+                OnPropertyChanged(nameof(TotalDefects));
+                OnPropertyChanged(nameof(TotalDies));
+            }
+        }
+
+        public ObservableCollection<Defect> Defects
+        {
+            get => defects;
+            set
+            {
+                defects = value;
+                OnPropertyChanged(nameof(Defects));
+            }
+        }
+
+        public Die SelectedDie
+        {
+            get => selectedDie;
+            set
+            {
+                if (selectedDie != value)
+                {
+                    selectedDie = value;
+                    OnPropertyChanged(nameof(SelectedDie));
+                }
+            }
+        }
         public string TimeStamp
         {
             get { return timeStamp; }
@@ -78,86 +114,6 @@ namespace Klarf.ViewModel
                 }
             }
         }
-
-        public BitmapSource CurDefectImg
-        {
-            get { return curDefectImg; }
-            set
-            {
-                curDefectImg = value;
-                OnPropertyChanged(nameof(CurDefectImg));
-            }
-        }
-        #endregion
-
-        #region 메서드
-        public void LoadTiffData(TiffBitmapDecoder LoadedTiff)
-        {
-            tiffDecoder = LoadedTiff;
-        }
-
-        public void GoPrevDefect()
-        {
-            if (CurDefectID > 0)
-            {
-                CurDefectID--;
-                selectedDefect = defects[CurDefectID];
-                SharedData.Instance.DefectID = CurDefectID;
-                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
-            }
-        }
-
-        public void GoNextDefect()
-        {
-            if (CurDefectID < TotalDefects - 1)
-            {
-                CurDefectID++;
-                SelectedDefect = Defects[CurDefectID];
-                SharedData.Instance.DefectID = CurDefectID;
-                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
-            }
-        }
-
-        public ICommand GoPrevDefectCommand { get; private set; }
-        public ICommand GoNextDefectCommand { get; private set; }
-
-        public Wafer Wafer
-        {
-            get { return wafer; }
-            set
-            {
-                wafer = value;
-                OnPropertyChanged(nameof(Wafer));
-                OnPropertyChanged(nameof(DefectList));
-                OnPropertyChanged(nameof(DieList));
-                OnPropertyChanged(nameof(TotalDefects));
-                OnPropertyChanged(nameof(TotalDies));
-            }
-        }
-
-        public ObservableCollection<Defect> Defects
-        {
-            get => defects;
-            set
-            {
-                defects = value;
-                OnPropertyChanged(nameof(Defects));
-            }
-        }
-
-        public Die SelectedDie
-        {
-            get => selectedDie;
-            set
-            {
-                if (selectedDie != value)
-                {
-                    selectedDie = value;
-                    OnPropertyChanged(nameof(SelectedDie));
-                }
-            }
-        }
-
         public Defect SelectedDefect
         {
             get => selectedDefect;
@@ -263,23 +219,6 @@ namespace Klarf.ViewModel
             get { return SelectedDie?.Defects?.Count ?? 0; }
         }
 
-        private void LoadWaferData(Wafer loadedWafer)
-        {
-            Wafer = loadedWafer;
-            if (wafer != null)
-            {
-      
-                TimeStamp = wafer.FileTimestamp;
-                WaferID = wafer.WaferID;
-                LotID = wafer.LotID;
-            }
-        }
-
-        private void LoadDefectData(List<Defect> Defects)
-        {
-            this.Defects = new ObservableCollection<Defect>(Defects);
-        }
-
         public string DieList
         {
             get
@@ -318,6 +257,69 @@ namespace Klarf.ViewModel
                 }
             }
         }
+        public BitmapSource CurDefectImg
+        {
+            get { return curDefectImg; }
+            set
+            {
+                curDefectImg = value;
+                OnPropertyChanged(nameof(CurDefectImg));
+            }
+        }
+        #endregion
+
+        #region 메서드
+        public void LoadTiffData(TiffBitmapDecoder LoadedTiff)
+        {
+            tiffDecoder = LoadedTiff;
+        }
+
+        public void GoPrevDefect()
+        {
+            if (CurDefectID > 0)
+            {
+                CurDefectID--;
+                selectedDefect = defects[CurDefectID];
+                SharedData.Instance.DefectID = CurDefectID;
+                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
+            }
+        }
+
+        public void GoNextDefect()
+        {
+            if (CurDefectID < TotalDefects - 1)
+            {
+                CurDefectID++;
+                SelectedDefect = Defects[CurDefectID];
+                SharedData.Instance.DefectID = CurDefectID;
+                CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
+            }
+        }
+
+        public ICommand GoPrevDefectCommand { get; private set; }
+        public ICommand GoNextDefectCommand { get; private set; }
+
+       
+
+     
+        private void LoadWaferData(Wafer loadedWafer)
+        {
+            Wafer = loadedWafer;
+            if (wafer != null)
+            {
+      
+                TimeStamp = wafer.FileTimestamp;
+                WaferID = wafer.WaferID;
+                LotID = wafer.LotID;
+            }
+        }
+
+        private void LoadDefectData(List<Defect> Defects)
+        {
+            this.Defects = new ObservableCollection<Defect>(Defects);
+        }
+
+      
 
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
