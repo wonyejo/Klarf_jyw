@@ -25,9 +25,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="FileViewer" Grid.Row="0" FontWeight="Bold"/>
             <Button Content="Open Done Folder" Grid.Row="1" Grid.Column="0" Width="150" Command="{Binding OpenFolderCommand}"/>
-            <Button Content="Save all images" Grid.Row="1" Grid.Column="1" Width="100"/>
-            <Button Content="Refresh" Grid.Row="1" Grid.Column="2" Width="100"/>
-            <ProgressBar Value="50" Maximum="100"  VerticalAlignment="Center" Width="200" Grid.Row="1" Grid.Column="3"/>
+            
             <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Grid.Row="2" Grid.Column="0" Text="{Binding SelectedFolderPath}" />
             <ListView ItemsSource="{Binding KlarfPaths}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedFile}">
                 <ListView.View>

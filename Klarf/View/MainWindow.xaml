@@ -8,30 +8,28 @@
         xmlns:v="clr-namespace:Klarf.View"
         mc:Ignorable="d"
         Title="Klarf Format" Height="800" Width="1200">
-    
-     <Grid>
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-    
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- 첫 번째 UserControl -->
-        <v:WaferMapViewer />
+        <v:WaferMapViewer Margin="5" />
 
         <!-- 두 번째 UserControl -->
-        <v:DefectImgViewer Grid.Row="0" Grid.Column="1" />
+        <v:DefectImgViewer Grid.Row="0" Grid.Column="1" Margin="5" />
 
         <!-- 세 번째 UserControl -->
-        <v:FileListViewer Grid.Row="1" />
+        <v:FileListViewer Grid.Row="1" Margin="5" />
 
         <!-- 네 번째 UserControl -->
-        <v:DefectInfoViewer Grid.Row="1" Grid.Column="1" />
+        <v:DefectInfoViewer Grid.Row="1" Grid.Column="1" Margin="5" />
     </Grid>
-
-   
 </Window>

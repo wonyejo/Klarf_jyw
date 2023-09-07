@@ -136,7 +136,7 @@ namespace Klarf.ViewModel
                         }
                     }
 
-                    SharedData.Instance.DefectID = SelectedDefect.DefectId;
+                    SharedData.Instance.DefectID = SelectedDefect.DefectId-1;
                     CurDefectID = SelectedDefect.DefectId;
                     CurDefectImg = SharedData.Instance.tiffDecoder.Frames[CurDefectID];
                     OnPropertyChanged(nameof(DieList));
