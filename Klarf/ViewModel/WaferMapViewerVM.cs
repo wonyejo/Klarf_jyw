@@ -14,8 +14,25 @@ namespace Klarf.ViewModel
 {
     class WaferMapViewerVM : ViewModelBase
     {
+        #region 필드
         public Wafer wafer;
         public DieViewModel selectedDie;
+        private ObservableCollection<Defect> defects;
+        private Rectangle selectedDefectOutline;
+        private int curDefectID;
+        #endregion
+
+        #region 속성
+        public Rectangle SelectedDefectOutline
+        {
+            get { return selectedDefectOutline; }
+            set
+            {
+                selectedDefectOutline = value;
+                OnPropertyChanged(nameof(SelectedDefectOutline));
+            }
+        }
+
         public Wafer Wafer
         {
             get { return wafer; }
@@ -29,9 +46,20 @@ namespace Klarf.ViewModel
                     DrawWaferMap(wafer);
                 }
             }
-
         }
 
+        public int CurDefectID
+        {
+            get { return curDefectID; }
+            set
+            {
+                if (curDefectID != value)
+                {
+                    curDefectID = value;
+                    OnPropertyChanged(nameof(CurDefectID));
+                }
+            }
+        }
 
         public DieViewModel SelectedDie
         {
@@ -54,7 +82,18 @@ namespace Klarf.ViewModel
         }
 
         public ObservableCollection<Shape> WaferMapShapes { get; set; } // Shapes 컬렉션을 추가
+        public ObservableCollection<Defect> Defects
+        {
+            get => defects;
+            set
+            {
+                defects = value;
+                OnPropertyChanged(nameof(Defects));
+            }
+        }
+        #endregion
 
+        #region 생성자
         public WaferMapViewerVM()
         {
             WaferMapShapes = new ObservableCollection<Shape>();
@@ -63,32 +102,67 @@ namespace Klarf.ViewModel
             {
                 LoadWaferData(SharedData.Instance.Wafer);
                 DrawWaferMap(Wafer);
+                LoadDefectData(SharedData.Instance.Defects);
+                DrawSelectedDefectOutline(curDefectID);
             }
 
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
-
-            //defects = new ObservableCollection<Defect>();
         }
+        #endregion
 
-
-
+        #region 메서드
         private void LoadWaferData(Wafer loadedWafer)
         {
             Wafer = loadedWafer;
-
         }
-        private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Wafer")
-            {
-                Wafer = SharedData.Instance.Wafer;
-            }
 
+        private void LoadDefectData(List<Defect> Defects)
+        {
+            this.Defects = new ObservableCollection<Defect>(Defects);
+        }
+
+        private void DrawSelectedDefectOutline(int selectedDefectID)
+        {
+            double minX = wafer.Dies.Min(die => die.X);
+            double maxY = wafer.Dies.Max(die => die.Y);
+
+            Defect selectedDefect = Defects.FirstOrDefault(defect => defect.DefectId == selectedDefectID);
+
+            if (selectedDefect != null)
+            {
+                double cellWidth = 380.0 / wafer.GridWidth;
+                double cellHeight = 380.0 / wafer.GridHeight;
+                double x = (selectedDefect.XIndex - minX) * cellWidth;
+                double y = (maxY - selectedDefect.YIndex) * cellHeight;
+
+                var rect = new Rectangle();
+                rect.Width = cellWidth;
+                rect.Height = cellHeight;
+                rect.Stroke = Brushes.Blue;
+                rect.StrokeThickness = 2;
+
+                Canvas.SetLeft(rect, x);
+                Canvas.SetTop(rect, y);
+
+                RemoveSelectedDefectOutline();
+
+                WaferMapShapes.Add(rect);
+                selectedDefectOutline = rect;
+            }
+        }
+
+        private void RemoveSelectedDefectOutline()
+        {
+            if (selectedDefectOutline != null)
+            {
+                WaferMapShapes.Remove(selectedDefectOutline);
+                selectedDefectOutline = null;
+            }
         }
 
         private void DrawWaferMap(Wafer wafer)
         {
-            WaferMapShapes.Clear(); // 기존의 Shapes 제거
+            WaferMapShapes.Clear();
 
             double minX = wafer.Dies.Min(die => die.X);
             double maxY = wafer.Dies.Max(die => die.Y);
@@ -96,7 +170,7 @@ namespace Klarf.ViewModel
             foreach (var die in wafer.Dies)
             {
                 var rect = new Rectangle();
-                double cellWidth = 380.0 / wafer.GridWidth; // 화면의 크기를 웨이퍼 그리드 값으로 나눔
+                double cellWidth = 380.0 / wafer.GridWidth;
                 double cellHeight = 380.0 / wafer.GridHeight;
                 rect.Width = cellWidth;
                 rect.Height = cellHeight;
@@ -114,15 +188,31 @@ namespace Klarf.ViewModel
                     rect.Stroke = Brushes.DarkGray;
                 }
 
-                // die의 좌표를 상대좌표로 변환하여 적용
                 double x = (die.X - minX) * cellWidth;
                 double y = (maxY - die.Y) * cellHeight;
 
                 Canvas.SetLeft(rect, x);
                 Canvas.SetTop(rect, y);
 
-                WaferMapShapes.Add(rect); // Shapes 컬렉션에 Rectangle 추가
+                WaferMapShapes.Add(rect);
             }
         }
+
+        private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Wafer")
+            {
+                LoadWaferData(SharedData.Instance.Wafer);
+            }
+            if (e.PropertyName == "Defects")
+            {
+                LoadDefectData(SharedData.Instance.Defects);
+            }
+            if (e.PropertyName == "defectID")
+            {
+                SharedData.Instance.DefectID = CurDefectID;
+            }
+        }
+        #endregion
     }
 }

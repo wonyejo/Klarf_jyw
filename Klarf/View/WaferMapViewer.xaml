@@ -19,7 +19,6 @@
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Width="380" Height="380" Background="Black">
-                                             
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
@@ -29,16 +28,6 @@
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Fill" Value="Gray"/>
-                                
-                              
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsDefectInDie}" Value="True">
-                                        <Setter Property="Fill" Value="Red"/>
-                                        <Setter Property="Stroke" Value="White"/>
-                                        
-                                        
-                                    </DataTrigger>
-                                </Style.Triggers>
                             </Style>
                         </Rectangle.Style>
                         <Rectangle.ToolTip>

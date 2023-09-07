@@ -11,18 +11,80 @@ namespace Klarf.ViewModel
 {
     public class SharedData : INotifyPropertyChanged
     {
+    
+        #region 필드
         private static SharedData instance = null;
         private Wafer wafer;
         private string folderPath;
         private bool defectShowData;
         private int defectID;
-        public event PropertyChangedEventHandler PropertyChanged;
         private List<Defect> defects;
         private BitmapSource curDefectImg;
         public TiffBitmapDecoder tiffDecoder;
 
+        #endregion
 
+        #region 속성
 
+        public BitmapSource CurDefectImg
+        {
+            get { return curDefectImg; }
+            set
+            {
+                curDefectImg = value;
+                OnPropertyChanged(nameof(CurDefectImg));
+            }
+        }
+
+        public string FolderPath
+        {
+            get { return folderPath; }
+            set
+            {
+                folderPath = value;
+                OnPropertyChanged("FolderPath");
+            }
+        }
+
+        public Wafer Wafer
+        {
+            get { return wafer; }
+            set
+            {
+                wafer = value;
+                OnPropertyChanged("Wafer");
+            }
+        }
+
+        public List<Defect> Defects
+        {
+            get { return defects; }
+            set
+            {
+                defects = value;
+                OnPropertyChanged("Defects");
+            }
+        }
+
+        public bool DefectShowData
+        {
+            get { return defectShowData; }
+            set
+            {
+                defectShowData = value;
+                OnPropertyChanged("DefectShowData");
+            }
+        }
+
+        public int DefectID
+        {
+            get { return defectID; }
+            set
+            {
+                defectID = value;
+                OnPropertyChanged("DefectID");
+            }
+        }
         public static SharedData Instance
         {
             get
@@ -35,61 +97,11 @@ namespace Klarf.ViewModel
                 return instance;
             }
         }
-        public BitmapSource CurDefectImg
-        {
-            get { return curDefectImg; }
-            set
-            {
-                curDefectImg = value;
-                OnPropertyChanged(nameof(CurDefectImg));
-            }
-        }
-        public string FolderPath
-        {
-            get { return folderPath; }
-            set
-            {
-                folderPath = value;
-                OnPropertyChanged("FolderPath");
-            }
-        }
-        public Wafer Wafer
-        {
-            get { return wafer; }
-            set
-            {
-                wafer = value;
-                OnPropertyChanged("Wafer");
-            }
-        }
-        public List<Defect> Defects
+        #endregion
 
-        {
-            get { return defects; }
-            set
-            {
-                defects = value;
-                OnPropertyChanged("Defects");
-            }
-        }
-        public bool DefectShowData
-        {
-            get { return defectShowData; }
-            set
-            {
-                defectShowData = value;
-                OnPropertyChanged("DefectShowData");
-            }
-        }
-        public int DefectID
-        {
-            get { return defectID; }
-            set
-            {
-                defectID = value;
-                OnPropertyChanged("DefectID");
-            }
-        }
+        #region 메서드
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
         {
@@ -100,7 +112,7 @@ namespace Klarf.ViewModel
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-      
-    }
 
+        #endregion
+    }
 }

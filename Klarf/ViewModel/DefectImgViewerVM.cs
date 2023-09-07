@@ -10,11 +10,17 @@ namespace Klarf.ViewModel
 {
     class DefectImgViewerVM : ViewModelBase
     {
+        #region 필드
+
         private int curDefectID;
         private BitmapSource curDefectImg;
         private TiffBitmapDecoder tiffDecoder;
         private string receivedFolderPath;
         private bool receivedDefectShow = false;
+
+        #endregion
+
+        #region 속성
 
         public bool ReceivedDefectShow
         {
@@ -43,6 +49,7 @@ namespace Klarf.ViewModel
                 }
             }
         }
+
         public string ReceivedFolderPath
         {
             get { return receivedFolderPath; }
@@ -67,11 +74,18 @@ namespace Klarf.ViewModel
             }
         }
 
+        #endregion
+
+        #region 생성자
 
         public DefectImgViewerVM()
         {
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
         }
+
+        #endregion
+
+        #region 메서드
 
         private string selectedFilePath;
         public string SelectedFilePath
@@ -81,11 +95,9 @@ namespace Klarf.ViewModel
             {
                 selectedFilePath = value;
                 OnPropertyChanged(nameof(SelectedFilePath));
-
-                LoadTiff(); // 이미지 로드 메서드 호출
+                LoadTiff();
             }
         }
-       
 
         private void LoadTiff()
         {
@@ -102,7 +114,6 @@ namespace Klarf.ViewModel
             if (tiffDecoder.Frames.Count > 0)
             {
                 LoadImg();
-  
             }
         }
 
@@ -110,22 +121,25 @@ namespace Klarf.ViewModel
         {
             CurDefectImg = tiffDecoder.Frames[CurDefectID];
         }
+
+
+
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "DefectID")
             {
                 CurDefectID = SharedData.Instance.DefectID;
             }
-          
             else if (e.PropertyName == "FolderPath")
             {
                 ReceivedFolderPath = SharedData.Instance.FolderPath;
             }
-            else if(e.PropertyName== "CurDefectImg")
+            else if (e.PropertyName == "CurDefectImg")
             {
                 CurDefectImg = SharedData.Instance.CurDefectImg;
             }
-           
         }
+
+        #endregion
     }
 }
