@@ -200,6 +200,8 @@ namespace Klarf.ViewModel
             }
         }
 
+
+
         private void SharedData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Wafer")

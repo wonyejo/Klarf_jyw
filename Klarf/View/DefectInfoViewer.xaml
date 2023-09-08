@@ -38,20 +38,9 @@
             <TextBlock Text="{Binding WaferID}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
             <TextBlock Text="{Binding LotID}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
 
-            <Button Width="20" Height="20"  Grid.Row="2" Grid.Column="2"  IsEnabled="True" >
-                <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
-            </Button>
-            <Button Width="20" Height="20" Grid.Row="2" Grid.Column="4"  IsEnabled="True">
-                <Image Source="/Klarf;component/Img/free-icon-fast-forward-254422.png" ></Image>
-            </Button>
+           
 
-            <Button Width="20" Height="20"  Grid.Row="3" Grid.Column="2">
-                <Image Source="/Klarf;component/Img/free-icon-left-arrow-254427.png"></Image>
-            </Button>
-
-            <Button Width="20" Height="20" Grid.Row="3" Grid.Column="4">
-                <Image Source="/Klarf;component/Img/free-icon-right-arrow-254442.png"></Image></Button>
-
+          
             <Button Width="20" Height="20"  Grid.Row="4" Grid.Column="2" Command="{Binding GoPrevDefectCommand}">
                 <Image Source="/Klarf;component/Img/free-icon-rewind-254440.png"></Image>
             </Button>
