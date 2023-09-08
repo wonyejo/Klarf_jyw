@@ -57,6 +57,7 @@ namespace Klarf.ViewModel
                 {
                     curDefectID = value;
                     OnPropertyChanged(nameof(CurDefectID));
+                    DrawSelectedDefectOutline(CurDefectID);
                 }
             }
         }
@@ -103,7 +104,8 @@ namespace Klarf.ViewModel
                 LoadWaferData(SharedData.Instance.Wafer);
                 DrawWaferMap(Wafer);
                 LoadDefectData(SharedData.Instance.Defects);
-                DrawSelectedDefectOutline(curDefectID);
+                DrawSelectedDefectOutline(CurDefectID);
+
             }
 
             SharedData.Instance.PropertyChanged += SharedData_PropertyChanged;
@@ -126,7 +128,7 @@ namespace Klarf.ViewModel
             double minX = wafer.Dies.Min(die => die.X);
             double maxY = wafer.Dies.Max(die => die.Y);
 
-            Defect selectedDefect = Defects.FirstOrDefault(defect => defect.DefectId == selectedDefectID);
+            Defect selectedDefect = Defects.FirstOrDefault(defect => defect.DefectId-1 == selectedDefectID);
 
             if (selectedDefect != null)
             {
@@ -208,9 +210,9 @@ namespace Klarf.ViewModel
             {
                 LoadDefectData(SharedData.Instance.Defects);
             }
-            if (e.PropertyName == "defectID")
+            if (e.PropertyName == "DefectID")
             {
-                SharedData.Instance.DefectID = CurDefectID;
+                CurDefectID = SharedData.Instance.DefectID;
             }
         }
         #endregion
