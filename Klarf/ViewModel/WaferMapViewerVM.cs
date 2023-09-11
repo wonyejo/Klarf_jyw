@@ -128,7 +128,7 @@ namespace Klarf.ViewModel
             double minX = wafer.Dies.Min(die => die.X);
             double maxY = wafer.Dies.Max(die => die.Y);
 
-            Defect selectedDefect = Defects.FirstOrDefault(defect => defect.DefectId-1 == selectedDefectID);
+            Defect selectedDefect = Defects.FirstOrDefault(defect => defect.DefectId - 1 == selectedDefectID);
 
             if (selectedDefect != null)
             {
@@ -196,6 +196,17 @@ namespace Klarf.ViewModel
                 Canvas.SetLeft(rect, x);
                 Canvas.SetTop(rect, y);
 
+                rect.MouseEnter += (sender, e) =>
+                {
+
+                    string tooltipMessage = $"({die.X}, {die.Y})";
+                    ToolTipService.SetToolTip(rect, tooltipMessage);
+
+                 
+                };
+
+               
+
                 WaferMapShapes.Add(rect);
             }
         }
@@ -220,3 +231,9 @@ namespace Klarf.ViewModel
         #endregion
     }
 }
+
+/*
+ 
+ 
+ 
+ */
